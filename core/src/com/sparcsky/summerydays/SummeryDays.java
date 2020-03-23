@@ -2,27 +2,40 @@ package com.sparcsky.summerydays;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.sparcsky.summerydays.asset.Asset;
 import com.sparcsky.summerydays.screen.LoadScreen;
+import com.sparcsky.summerydays.screen.ScreenManager;
 
 public class SummeryDays extends Game {
 
-    private LoadScreen loadScreen;
+    public Asset asset;
+    public SpriteBatch render;
+    public ScreenManager screenManager;
+
     @Override
     public void create() {
-        setScreen(new LoadScreen(this));
+        render = new SpriteBatch();
+        asset = new Asset();
+
+        asset.load(Asset.loadDiamond);
+        asset.load(Asset.fontBit);
+        asset.loadAll();
+
+        screenManager = new ScreenManager(this);
+        screenManager.setScreen(new LoadScreen(this));
     }
 
     @Override
     public void render() {
-        Gdx.gl.glClearColor(1, 0, 0, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
-
+        screenManager.update(Gdx.graphics.getDeltaTime());
+        screenManager.render(Gdx.graphics.getDeltaTime());
     }
 
     @Override
     public void dispose() {
-
+        super.dispose();
+        render.dispose();
+        screenManager.dispose();
     }
 }
