@@ -1,31 +1,28 @@
 package com.sparcsky.summerydays.screen;
 
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.actions.RunnableAction;
-import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.sparcsky.summerydays.SummeryDays;
+import com.sparcsky.summerydays.asset.Asset;
 import com.sparcsky.summerydays.entity.LibgdxSplash;
 
 public class SplashScreen extends BaseScreen {
 
     private Stage stage;
+    private LibgdxSplash libgdxSplash;
 
-    public SplashScreen(SummeryDays game) {
+    SplashScreen(SummeryDays game) {
         super(game);
-        screenColor.set(1f, 1f, 1f, 1f);
     }
 
     @Override
     public void show() {
-    /*    libgdxSplash.actionComplete(new RunnableAction() {
-            @Override
-            public void run() {
-                screenColor.set(0, 0, 0, 0);
-            }
-        });*/
-        stage = new Stage(new FitViewport(width, height));
+        OrthographicCamera camera = new OrthographicCamera(width, height);
+        stage = new Stage(new StretchViewport(VIRTUAL_WIDTH, VIRTUAL_HEIGHT, camera));
+        screenColor.set(1f, 1f, 1f, 1f);
 
-        LibgdxSplash libgdxSplash = new LibgdxSplash(asset);
+        libgdxSplash = new LibgdxSplash(asset);
         libgdxSplash.addToStage(stage);
     }
 
@@ -37,6 +34,11 @@ public class SplashScreen extends BaseScreen {
     @Override
     public void update(float delta) {
         stage.act(delta);
+
+        if (libgdxSplash.isFinish()) {
+            dispose();
+            screenManager.setScreen(new MenuScreen(game));
+        }
     }
 
     @Override
@@ -48,5 +50,6 @@ public class SplashScreen extends BaseScreen {
     @Override
     public void dispose() {
         stage.dispose();
+        asset.unload(Asset.libgdxLogo);
     }
 }

@@ -18,10 +18,6 @@ public class SummeryDays extends Game {
         render = new SpriteBatch();
         asset = new Asset();
 
-        asset.load(Asset.loadDiamond);
-        asset.load(Asset.fontBit);
-        asset.loadAll();
-
         screenManager = new ScreenManager(this);
         screenManager.setScreen(new LoadScreen(this));
     }
@@ -35,6 +31,7 @@ public class SummeryDays extends Game {
     @Override
     public void dispose() {
         super.dispose();
+        asset.dispose();
         render.dispose();
         screenManager.dispose();
     }

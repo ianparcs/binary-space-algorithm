@@ -10,6 +10,7 @@ public class DesktopLauncher {
         config.width = 1920;
         config.height = 1080;
         config.forceExit = false;
+        config.title = "Summery Days";
         new LwjglApplication(new SummeryDays(), config);
     }
 }

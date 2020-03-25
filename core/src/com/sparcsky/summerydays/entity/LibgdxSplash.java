@@ -1,61 +1,92 @@
 package com.sparcsky.summerydays.entity;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.actions.AlphaAction;
 import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
+import com.badlogic.gdx.scenes.scene2d.actions.RunnableAction;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.utils.Array;
 import com.sparcsky.summerydays.asset.Asset;
+import com.sparcsky.summerydays.screen.BaseScreen;
 
-import java.util.ArrayList;
-import java.util.List;
+public class LibgdxSplash extends Actor {
 
-public class LibgdxSplash extends Entity {
-
-    private List<Actor> flash;
+    private Array<Actor> flash;
+    private Table table;
+    private Label label;
     private Actor bg;
 
+    private float x;
+    private float y;
+
+    private boolean finish;
+
     public LibgdxSplash(Asset asset) {
+
         Texture logo = asset.get(Asset.libgdxLogo);
         logo.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
 
-        int wWidth = Gdx.graphics.getWidth();
-        int wHeight = Gdx.graphics.getHeight();
-        this.x = (wWidth / 2f) - (wWidth / 4f) / 2f;
-        this.y = (wHeight / 2f) + (wHeight / 12f) / 2f;
+        table = new Table();
 
-        flash = new ArrayList<>();
-        for (int i = 0; i < 3; i++) {
+        int virtualWidth = BaseScreen.VIRTUAL_WIDTH;
+        int virtualHeight = BaseScreen.VIRTUAL_HEIGHT;
+
+        float width = logo.getWidth() / 5f;
+        float height = logo.getHeight() / 5f;
+        this.x = (virtualWidth / 2f) - (width / 2f);
+        this.y = (virtualHeight / 2f) - (height / 2f);
+
+        bg = createBackground(virtualWidth, virtualHeight);
+
+        Label.LabelStyle style = new Label.LabelStyle(asset.get(Asset.fontBit), Color.BLACK);
+        label = new Label("POWERED BY", style);
+        label.setPosition(x, y + height + label.getHeight() / 2f);
+
+        flash = new Array<>();
+        for (int i = 0; i < 5; i++) {
             Actor actor = new Image(logo);
-            actor.setSize(wWidth / 4f,wHeight / 12f);
+            actor.setSize(width, height);
             actor.setX(-actor.getWidth() - (i * actor.getWidth()));
             actor.setY(y);
 
-            AlphaAction logoFadeOut = Actions.fadeOut(4.5f);
-            MoveToAction moveAction = createMoveAction();
+            AlphaAction logoFadeOut = Actions.fadeOut(4);
+            MoveToAction moveAction = createMoveAction(5);
 
-            if (i != 0) {
-                actor.addAction(Actions.parallel(moveAction, logoFadeOut));
+            if (i == 0) {
+                actor.addAction(Actions.sequence(moveAction, new RunnableAction() {
+                    @Override
+                    public void run() {
+                        actor.addAction(Actions.sequence(Actions.delay(1.5f), Actions.fadeOut(2)));
+                        label.addAction(Actions.sequence(Actions.delay(1.5f), Actions.fadeOut(2)));
+                        bg.addAction(Actions.sequence(Actions.delay(1.5f), Actions.color(Color.BLACK, 2),
+                                new RunnableAction() {
+                                    @Override
+                                    public void run() {
+                                        finish = true;
+                                    }
+                                }));
+                    }
+                }));
             } else {
-                actor.addAction(Actions.sequence(moveAction, logoFadeOut));
+                actor.addAction(Actions.parallel(moveAction, logoFadeOut));
             }
             flash.add(actor);
         }
-        bg = createBackground(wWidth, wHeight);
     }
 
-    private MoveToAction createMoveAction() {
+    private MoveToAction createMoveAction(float duration) {
         MoveToAction moveAction = Actions.action(MoveToAction.class);
-        moveAction.setInterpolation(Interpolation.exp5);
+        moveAction.setInterpolation(Interpolation.exp10);
         moveAction.setPosition(x, y);
-        moveAction.setDuration(4);
+        moveAction.setDuration(duration);
         return moveAction;
     }
 
@@ -67,24 +98,21 @@ public class LibgdxSplash extends Entity {
 
         Texture txBackground = new Texture(pixmap);
         pixmap.dispose();
-
-        AlphaAction bgFadeOut = Actions.fadeOut(4.5f);
-
-        Actor actor = new Image(txBackground);
-        actor.addAction(Actions.sequence(bgFadeOut, Actions.color(Color.BLACK, 4.5f)));
-        return actor;
+        return new Image(txBackground);
     }
-/*
-    public void actionComplete(RunnableAction runnableAction) {
-        SequenceAction sequenceAction = (SequenceAction) actor.getActions().get(actor.getActions().size - 1);
-        sequenceAction.addAction(runnableAction);
-    }*/
+
+    public boolean isFinish() {
+        return finish;
+    }
 
     public void addToStage(Stage stage) {
-        stage.addActor(bg);
-        for (Actor actor : flash) {
-            stage.addActor(actor);
+        table = new Table();
+        table.addActor(bg);
+        table.addActor(label);
+        for (int i = 0; i < flash.size; i++) {
+            table.addActor(flash.get(i));
         }
+        stage.addActor(table);
     }
 
 }

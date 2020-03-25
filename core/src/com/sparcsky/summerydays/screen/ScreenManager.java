@@ -36,9 +36,7 @@ public class ScreenManager {
 
     public void dispose() {
         if (!stack.isEmpty()) {
-            for (BaseScreen baseScreen : stack) {
-                baseScreen.dispose();
-            }
+            stack.peek().dispose();
         }
     }
 
