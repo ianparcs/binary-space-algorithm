@@ -37,7 +37,7 @@ public class SplashScreen extends BaseScreen {
 
         if (libgdxSplash.isFinish()) {
             dispose();
-            screenManager.setScreen(new MenuScreen(game));
+            screenManager.setScreen(new LevelScreen(game));
         }
     }
 

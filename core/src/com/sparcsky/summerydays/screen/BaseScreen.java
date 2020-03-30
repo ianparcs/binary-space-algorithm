@@ -37,11 +37,7 @@ public abstract class BaseScreen implements Screen {
 
     @Override
     public void render(float delta) {
-        clearScreen(screenColor.r, screenColor.g, screenColor.b, 1);
-    }
-
-    private void clearScreen(float r, float g, float b, float a) {
-        Gdx.gl.glClearColor(r, g, b, a);
+        Gdx.gl.glClearColor(screenColor.r,screenColor.g, screenColor.b, screenColor.a);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
     }
 

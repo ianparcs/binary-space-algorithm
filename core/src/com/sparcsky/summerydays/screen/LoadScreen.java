@@ -59,7 +59,7 @@ public class LoadScreen extends BaseScreen {
         diamond.update(delta);
         if (asset.isLoadFinish()) {
             dispose();
-            screenManager.setScreen(new SplashScreen(game));
+            screenManager.setScreen(new LevelScreen(game));
         }
     }
 

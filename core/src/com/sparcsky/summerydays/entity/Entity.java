@@ -1,18 +1,21 @@
 package com.sparcsky.summerydays.entity;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.sparcsky.summerydays.asset.Asset;
 
 public abstract class Entity {
 
-    protected float width;
-    protected float height;
-    protected float x;
-    protected float y;
+    public float x;
+    public float y;
+    public float width;
+    public float height;
 
-    public abstract void update(float delta);
+    public void update(float delta) {
 
-    public abstract void draw(SpriteBatch batch);
+    }
+
+    public void draw(SpriteBatch batch) {
+
+    }
 
     public float getWidth() {
         return width;
@@ -44,5 +47,15 @@ public abstract class Entity {
 
     public void setY(float y) {
         this.y = y;
+    }
+
+    public void setPosition(int x, int y) {
+        this.x = x;
+        this.y = y;
+    }
+
+    public void setSize(int width, int height) {
+        this.width = width;
+        this.height = height;
     }
 }

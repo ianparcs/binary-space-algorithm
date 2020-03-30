@@ -31,8 +31,8 @@ public class SummeryDays extends Game {
     @Override
     public void dispose() {
         super.dispose();
-        asset.dispose();
-        render.dispose();
         screenManager.dispose();
+        render.dispose();
+        asset.dispose();
     }
 }
