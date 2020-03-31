@@ -1,4 +1,4 @@
-package com.sparcsky.summerydays.screen;
+package com.sparcsky.bsp.screen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -6,8 +6,8 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.sparcsky.summerydays.Main;
-import com.sparcsky.summerydays.asset.Asset;
+import com.sparcsky.bsp.Main;
+import com.sparcsky.bsp.asset.Asset;
 
 public abstract class BaseScreen implements Screen {
 
@@ -18,7 +18,7 @@ public abstract class BaseScreen implements Screen {
     BitmapFont mainFont;
     SpriteBatch batch;
     Color screenColor;
-    Main game;
+    com.sparcsky.bsp.Main game;
     Asset asset;
 
     float height = Gdx.graphics.getHeight();

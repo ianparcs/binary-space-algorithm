@@ -1,4 +1,4 @@
-package com.sparcsky.summerydays;
+package com.sparcsky.bsp;
 
 import android.os.Bundle;
 

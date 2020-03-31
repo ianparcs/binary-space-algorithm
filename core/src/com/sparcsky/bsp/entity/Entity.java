@@ -1,4 +1,4 @@
-package com.sparcsky.summerydays.entity;
+package com.sparcsky.bsp.entity;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 

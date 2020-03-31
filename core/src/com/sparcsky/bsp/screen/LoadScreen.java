@@ -1,13 +1,13 @@
-package com.sparcsky.summerydays.screen;
+package com.sparcsky.bsp.screen;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.sparcsky.summerydays.Main;
-import com.sparcsky.summerydays.asset.Asset;
-import com.sparcsky.summerydays.entity.Diamond;
+import com.sparcsky.bsp.Main;
+import com.sparcsky.bsp.asset.Asset;
+import com.sparcsky.bsp.entity.Diamond;
 
 public class LoadScreen extends BaseScreen {
 
@@ -28,18 +28,18 @@ public class LoadScreen extends BaseScreen {
 
     @Override
     public void show() {
-        asset.load(Asset.loadDiamond);
-        asset.loadFont(Asset.fontBit, 12);
+        asset.load(com.sparcsky.bsp.asset.Asset.loadDiamond);
+        asset.loadFont(com.sparcsky.bsp.asset.Asset.fontBit, 12);
         asset.loadAll();
 
         camera = new OrthographicCamera(width, height);
         viewport = new StretchViewport(VIRTUAL_WIDTH, VIRTUAL_HEIGHT, camera);
-        mainFont = asset.get(Asset.fontBit);
+        mainFont = asset.get(com.sparcsky.bsp.asset.Asset.fontBit);
         diamond = new Diamond(asset);
 
         setDotsTimer();
 
-        asset.load(Asset.libgdxLogo);
+        asset.load(com.sparcsky.bsp.asset.Asset.libgdxLogo);
     }
 
 

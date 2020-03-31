@@ -1,4 +1,4 @@
-package com.sparcsky.summerydays;
+package com.sparcsky.bsp;
 
 import org.robovm.apple.foundation.NSAutoreleasePool;
 import org.robovm.apple.uikit.UIApplication;

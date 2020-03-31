@@ -1,11 +1,11 @@
-package com.sparcsky.summerydays;
+package com.sparcsky.bsp;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.sparcsky.summerydays.asset.Asset;
-import com.sparcsky.summerydays.screen.LoadScreen;
-import com.sparcsky.summerydays.screen.ScreenManager;
+import com.sparcsky.bsp.asset.Asset;
+import com.sparcsky.bsp.screen.LoadScreen;
+import com.sparcsky.bsp.screen.ScreenManager;
 
 public class Main extends Game {
 

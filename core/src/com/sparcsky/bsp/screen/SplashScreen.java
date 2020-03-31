@@ -1,11 +1,11 @@
-package com.sparcsky.summerydays.screen;
+package com.sparcsky.bsp.screen;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
-import com.sparcsky.summerydays.Main;
-import com.sparcsky.summerydays.asset.Asset;
-import com.sparcsky.summerydays.entity.LibgdxSplash;
+import com.sparcsky.bsp.Main;
+import com.sparcsky.bsp.asset.Asset;
+import com.sparcsky.bsp.entity.LibgdxSplash;
 
 public class SplashScreen extends BaseScreen {
 

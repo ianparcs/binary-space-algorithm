@@ -1,4 +1,4 @@
-package com.sparcsky.summerydays.asset;
+package com.sparcsky.bsp.asset;
 
 
 import com.badlogic.gdx.Gdx;
@@ -12,7 +12,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGeneratorLoader;
 import com.badlogic.gdx.graphics.g2d.freetype.FreetypeFontLoader;
-import com.sparcsky.summerydays.screen.BaseScreen;
+import com.sparcsky.bsp.screen.BaseScreen;
 
 public class Asset {
 

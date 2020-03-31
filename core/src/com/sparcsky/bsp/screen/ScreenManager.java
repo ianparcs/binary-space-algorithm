@@ -1,4 +1,4 @@
-package com.sparcsky.summerydays.screen;
+package com.sparcsky.bsp.screen;
 
 import com.badlogic.gdx.Game;
 
@@ -7,7 +7,7 @@ import java.util.Stack;
 
 public class ScreenManager {
 
-    private Stack<BaseScreen> stack;
+    private Stack<com.sparcsky.bsp.screen.BaseScreen> stack;
     private Game game;
 
     public ScreenManager(Game game) {
@@ -15,7 +15,7 @@ public class ScreenManager {
         stack = new Stack<>();
     }
 
-    public void add(BaseScreen screen) {
+    public void add(com.sparcsky.bsp.screen.BaseScreen screen) {
         if (!stack.contains(screen)) {
             stack.add(screen);
         }

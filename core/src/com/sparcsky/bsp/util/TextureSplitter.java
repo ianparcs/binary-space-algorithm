@@ -1,4 +1,4 @@
-package com.sparcsky.summerydays.util;
+package com.sparcsky.bsp.util;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;

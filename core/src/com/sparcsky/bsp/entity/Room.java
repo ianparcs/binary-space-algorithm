@@ -1,7 +1,7 @@
-package com.sparcsky.summerydays.entity;
+package com.sparcsky.bsp.entity;
 
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
-import com.sparcsky.summerydays.TileMaker;
+import com.sparcsky.bsp.TileMaker;
 
 public class Room {
 

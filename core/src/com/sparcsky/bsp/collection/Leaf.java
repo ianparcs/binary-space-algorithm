@@ -1,12 +1,12 @@
-package com.sparcsky.summerydays.collection;
+package com.sparcsky.bsp.collection;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
-import com.sparcsky.summerydays.TileMaker;
-import com.sparcsky.summerydays.entity.Room;
+import com.sparcsky.bsp.TileMaker;
+import com.sparcsky.bsp.entity.Room;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +21,7 @@ public class Leaf {
     private int x;
     private int y;
 
-    private Room room;
+    private com.sparcsky.bsp.entity.Room room;
 
     Leaf(int x, int y, int width, int height) {
         this.x = x;
@@ -57,7 +57,7 @@ public class Leaf {
         shapeDrawer.rect(x, y, width, height);
     }
 
-    public void createRooms(TileMaker tileMaker) {
+    public void createRooms(com.sparcsky.bsp.TileMaker tileMaker) {
         if (left != null || right != null) {
             if (left != null) left.createRooms(tileMaker);
             if (right != null) right.createRooms(tileMaker);
@@ -72,14 +72,14 @@ public class Leaf {
             int randWidth = MathUtils.random(5, Math.abs(x + width - randX) + 1);
             int randHeight = MathUtils.random(5, Math.abs(y + height - randY) + 1);
 
-            room = new Room(randX, randY, randWidth, randHeight);
+            room = new com.sparcsky.bsp.entity.Room(randX, randY, randWidth, randHeight);
             room.draw(tileMaker);
         }
     }
 
     private void createHalls(TileMaker tileMaker) {
-        Room roomL = left.getRoom();
-        Room roomR = right.getRoom();
+        com.sparcsky.bsp.entity.Room roomL = left.getRoom();
+        com.sparcsky.bsp.entity.Room roomR = right.getRoom();
         if (roomL == null || roomR == null) return;
         TiledMapTileLayer.Cell cell = tileMaker.getCell("room_mid_1");
 
@@ -97,7 +97,7 @@ public class Leaf {
         }
     }
 
-    private List<Vector2> walk(Room left, Room right) {
+    private List<Vector2> walk(com.sparcsky.bsp.entity.Room left, com.sparcsky.bsp.entity.Room right) {
         int dx = right.x - left.x;
         int dy = right.y - left.y;
 

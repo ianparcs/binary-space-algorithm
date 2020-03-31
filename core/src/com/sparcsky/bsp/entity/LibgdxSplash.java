@@ -1,4 +1,4 @@
-package com.sparcsky.summerydays.entity;
+package com.sparcsky.bsp.entity;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
@@ -14,8 +14,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Array;
-import com.sparcsky.summerydays.asset.Asset;
-import com.sparcsky.summerydays.screen.BaseScreen;
+import com.sparcsky.bsp.asset.Asset;
+import com.sparcsky.bsp.screen.BaseScreen;
 
 public class LibgdxSplash extends Actor {
 
@@ -29,9 +29,9 @@ public class LibgdxSplash extends Actor {
 
     private boolean finish;
 
-    public LibgdxSplash(Asset asset) {
+    public LibgdxSplash(com.sparcsky.bsp.asset.Asset asset) {
 
-        Texture logo = asset.get(Asset.libgdxLogo);
+        Texture logo = asset.get(com.sparcsky.bsp.asset.Asset.libgdxLogo);
         logo.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
 
         table = new Table();

@@ -1,4 +1,4 @@
-package com.sparcsky.summerydays.screen;
+package com.sparcsky.bsp.screen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -7,10 +7,10 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import com.sparcsky.summerydays.Main;
-import com.sparcsky.summerydays.TileMaker;
-import com.sparcsky.summerydays.asset.Asset;
-import com.sparcsky.summerydays.collection.BinarySpacePartitioning;
+import com.sparcsky.bsp.Main;
+import com.sparcsky.bsp.TileMaker;
+import com.sparcsky.bsp.asset.Asset;
+import com.sparcsky.bsp.collection.BinarySpacePartitioning;
 
 
 public class LevelScreen extends BaseScreen {

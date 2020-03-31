@@ -1,8 +1,8 @@
-package com.sparcsky.summerydays.desktop;
+package com.sparcsky.bsp.desktop;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
-import com.sparcsky.summerydays.Main;
+import com.sparcsky.bsp.Main;
 
 public class DesktopLauncher {
     public static void main(String[] arg) {

@@ -1,12 +1,12 @@
-package com.sparcsky.summerydays.entity;
+package com.sparcsky.bsp.entity;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.sparcsky.summerydays.asset.Asset;
-import com.sparcsky.summerydays.util.TextureSplitter;
+import com.sparcsky.bsp.asset.Asset;
+import com.sparcsky.bsp.util.TextureSplitter;
 
 public class Diamond extends Entity {
 
@@ -14,7 +14,7 @@ public class Diamond extends Entity {
     private TextureRegion loadFrame;
     private float stateTime = 0;
 
-    public Diamond(Asset asset) {
+    public Diamond(com.sparcsky.bsp.asset.Asset asset) {
         Texture texture = asset.get(Asset.loadDiamond);
         TextureRegion[] loadFrames = TextureSplitter.split(texture, 2, 2);
         loadAnim = new Animation<>(0.15f, loadFrames);

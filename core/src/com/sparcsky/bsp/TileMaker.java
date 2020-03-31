@@ -1,6 +1,5 @@
-package com.sparcsky.summerydays;
+package com.sparcsky.bsp;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.MapLayer;
@@ -9,14 +8,14 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.tiles.StaticTiledMapTile;
 import com.badlogic.gdx.math.MathUtils;
-import com.sparcsky.summerydays.asset.Asset;
+import com.sparcsky.bsp.asset.Asset;
 
 public class TileMaker {
 
     private TextureAtlas atlas;
     private TiledMap map;
 
-    public TileMaker(Asset asset, TiledMap map) {
+    public TileMaker(com.sparcsky.bsp.asset.Asset asset, TiledMap map) {
         this.map = map;
         atlas = asset.get(Asset.tileSetAtlas);
         TextureRegion region = atlas.findRegion("tileName");

@@ -1,4 +1,4 @@
-package com.sparcsky.summerydays.util;
+package com.sparcsky.bsp.util;
 
 
 import java.lang.management.ManagementFactory;
