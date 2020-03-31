@@ -3,7 +3,7 @@ package com.sparcsky.summerydays.screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
-import com.sparcsky.summerydays.SummeryDays;
+import com.sparcsky.summerydays.Main;
 import com.sparcsky.summerydays.asset.Asset;
 import com.sparcsky.summerydays.entity.LibgdxSplash;
 
@@ -12,7 +12,7 @@ public class SplashScreen extends BaseScreen {
     private Stage stage;
     private LibgdxSplash libgdxSplash;
 
-    SplashScreen(SummeryDays game) {
+    SplashScreen(Main game) {
         super(game);
     }
 

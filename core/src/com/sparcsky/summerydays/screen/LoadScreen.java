@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.sparcsky.summerydays.SummeryDays;
+import com.sparcsky.summerydays.Main;
 import com.sparcsky.summerydays.asset.Asset;
 import com.sparcsky.summerydays.entity.Diamond;
 
@@ -20,7 +20,7 @@ public class LoadScreen extends BaseScreen {
 
     private OrthographicCamera camera;
 
-    public LoadScreen(SummeryDays game) {
+    public LoadScreen(Main game) {
         super(game);
         screenColor.set(0.156f, 0.156f, 0.156f, 0.156f);
         layout = new GlyphLayout();

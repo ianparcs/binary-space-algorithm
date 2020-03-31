@@ -7,7 +7,7 @@ import com.sparcsky.summerydays.asset.Asset;
 import com.sparcsky.summerydays.screen.LoadScreen;
 import com.sparcsky.summerydays.screen.ScreenManager;
 
-public class SummeryDays extends Game {
+public class Main extends Game {
 
     public Asset asset;
     public SpriteBatch render;

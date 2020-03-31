@@ -1,7 +1,11 @@
 package com.sparcsky.summerydays;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.maps.MapLayer;
+import com.badlogic.gdx.maps.MapLayers;
+import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.tiles.StaticTiledMapTile;
 import com.badlogic.gdx.math.MathUtils;
@@ -10,8 +14,10 @@ import com.sparcsky.summerydays.asset.Asset;
 public class TileMaker {
 
     private TextureAtlas atlas;
+    private TiledMap map;
 
-    public TileMaker(Asset asset) {
+    public TileMaker(Asset asset, TiledMap map) {
+        this.map = map;
         atlas = asset.get(Asset.tileSetAtlas);
         TextureRegion region = atlas.findRegion("tileName");
         TiledMapTileLayer.Cell cell = new TiledMapTileLayer.Cell();
@@ -59,5 +65,21 @@ public class TileMaker {
         TiledMapTileLayer.Cell cell = new TiledMapTileLayer.Cell();
         cell.setTile(new StaticTiledMapTile(region));
         return cell;
+    }
+
+
+    public void removeLayer(TiledMap map) {
+        for (MapLayer layer : map.getLayers()) {
+            map.getLayers().remove(layer);
+        }
+    }
+
+    public void addLayer(TiledMap map, int width, int height) {
+        MapLayers mapLayers = map.getLayers();
+        mapLayers.add(new TiledMapTileLayer(width, height, 16, 16));
+    }
+
+    public TiledMapTileLayer getLayer(int index) {
+        return (TiledMapTileLayer) map.getLayers().get(index);
     }
 }

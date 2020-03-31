@@ -1,44 +1,46 @@
 package com.sparcsky.summerydays.collection;
 
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Vector2;
 import com.sparcsky.summerydays.TileMaker;
 import com.sparcsky.summerydays.entity.Room;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Leaf {
 
-    public static int MIN_LEAF_SIZE = 320;
-    public Leaf right;
-    public Leaf left;
+    public static int MIN_LEAF_SIZE = 16;
     public int width;
     public int height;
+    Leaf right;
+    Leaf left;
     private int x;
     private int y;
 
     private Room room;
 
-    public Leaf(int x, int y, int width, int height) {
+    Leaf(int x, int y, int width, int height) {
         this.x = x;
         this.y = y;
         this.width = width;
         this.height = height;
     }
 
-    public boolean split() {
+    boolean split() {
         if (left != null || right != null) return false;
+
         boolean splitH = false;
 
-        if (height > width && (float) height / width >= 1.25)
-            splitH = true;
-
-        int max = (splitH ? height : width) - MIN_LEAF_SIZE; // determine the maximum height or width
+        if (height > width && (float) height / width >= 1.25) splitH = true;
+        int max = (splitH ? height : width) - MIN_LEAF_SIZE;
         if (max <= MIN_LEAF_SIZE)
             return false;
 
-        int split = 0;
-        do {
-            split = MathUtils.random(MIN_LEAF_SIZE, max);
-        } while (split % 16 != 0);
+        int split = MathUtils.random(MIN_LEAF_SIZE, max);
 
         if (splitH) {
             left = new Leaf(x, y, width, split);
@@ -50,124 +52,75 @@ public class Leaf {
         return true;
     }
 
-    public void createRooms(TiledMapTileLayer layer, TileMaker tileMaker) {
+    public void draw(ShapeRenderer shapeDrawer) {
+        shapeDrawer.setColor(Color.GREEN);
+        shapeDrawer.rect(x, y, width, height);
+    }
+
+    public void createRooms(TileMaker tileMaker) {
         if (left != null || right != null) {
-            if (left != null) {
-                left.createRooms(layer, tileMaker);
-            }
-            if (right != null) {
-                right.createRooms(layer, tileMaker);
-            }
+            if (left != null) left.createRooms(tileMaker);
+            if (right != null) right.createRooms(tileMaker);
+
             if (left != null && right != null) {
-                createHalls(tileMaker, layer);
+                createHalls(tileMaker);
             }
         } else {
-            int randX, randY, randWidth, randHeight;
-            float randomDiv = 2f;
-            do {
-                randX = MathUtils.random(x, (x + width));
-                randY = MathUtils.random(y, (y + height));
-                randWidth = MathUtils.random(0, Math.abs(randX - (width + x)));
-                randHeight = MathUtils.random(0, Math.abs(randY - (height + y)));
-                float chance = MathUtils.random(0.00f, 1.00f);
-                if (chance <= .2f) randomDiv = 3f;
-                if (chance <= .1f) randomDiv = 4f;
+            int randX = MathUtils.random(x + 3, (x + width) - 5);
+            int randY = MathUtils.random(y + 3, (y + height) - 5);
 
-            } while (randWidth <= MIN_LEAF_SIZE / randomDiv || randHeight <= MIN_LEAF_SIZE / randomDiv ||
-                    (!isMultipleBy(randWidth) || !isMultipleBy(randHeight) || !isMultipleBy(randX) || !isMultipleBy(randY)));
+            int randWidth = MathUtils.random(5, Math.abs(x + width - randX) + 1);
+            int randHeight = MathUtils.random(5, Math.abs(y + height - randY) + 1);
 
             room = new Room(randX, randY, randWidth, randHeight);
-            room.draw(layer, tileMaker);
+            room.draw(tileMaker);
         }
     }
 
-    private boolean isMultipleBy(float num) {
-        return num % 16 == 0;
-    }
-
-    private void createHalls(TileMaker tileMaker, TiledMapTileLayer layer) {
+    private void createHalls(TileMaker tileMaker) {
         Room roomL = left.getRoom();
         Room roomR = right.getRoom();
         if (roomL == null || roomR == null) return;
-
-        float pointX;
-        float pointY;
-
-        do {
-            pointX = MathUtils.random(roomL.x + roomL.width, roomR.x);
-        } while (!isMultipleBy(pointX));
-        do {
-            pointY = MathUtils.random(roomL.y + roomL.height, roomR.y);
-        } while (!isMultipleBy(pointY));
-
         TiledMapTileLayer.Cell cell = tileMaker.getCell("room_mid_1");
 
-        for (int i = (int) (roomL.x + roomL.width) - 16; i < pointX; i += 16) {
-            layer.setCell(i, (int) roomL.doorY, cell);
-        }
+        roomL.doorX = roomL.x + roomL.width;
+        roomL.doorY = MathUtils.random(roomL.y, Math.abs(roomL.y + roomL.height));
 
-        int tempX = 0;
-        for (int i = (int) roomR.x; i >= pointX; i -= 16) {
-            tempX = i;
-            layer.setCell(i, (int) roomR.doorY, cell);
-        }
+        roomR.doorX = roomR.x;
+        roomR.doorY = MathUtils.random(roomR.y, Math.abs(roomR.y + roomR.height));
 
-        for (int i = (int) roomR.doorY; i <= roomL.doorY; i += 16) {
-            layer.setCell(tempX, i, cell);
+        List<Vector2> points = walk(roomL, roomR);
+        for (Vector2 point : points) {
+            for (int i = 0; i < points.size(); i++) {
+                tileMaker.getLayer(1).setCell((int) point.x, (int) point.y, cell);
+            }
         }
-        for (int i = (int) roomR.doorY; i >= roomL.doorY; i -= 16) {
-            layer.setCell(tempX, i, cell);
-        }
-
-        //TODO
-
-        for (int i = (int) (roomL.y + roomL.height); i <= pointY + 16; i += 16) {
-            layer.setCell((int) roomL.x, i, cell);
-        }
-        int tempY = 0;
-        for (int i = (int) roomR.y; i > pointY; i -= 16) {
-            tempY = i;
-            layer.setCell((int) roomR.x, i, cell);
-        }
-
-        for (int i = (int) roomL.x; i < roomR.x; i += 16) {
-            layer.setCell(i, tempY, cell);
-        }
-
-        for (int i = (int) roomL.x; i > roomR.x; i -= 16) {
-            layer.setCell(i, tempY, cell);
-        }
-
     }
 
-/*    private List<Vector2> createHall(TileMaker left, TiledMapTileLayer right) {
-        if (left == null || right == null) return null;
-        float dx = right.doorX - left.doorX;
-        float dy = right.doorY - left.doorY;
+    private List<Vector2> walk(Room left, Room right) {
+        int dx = right.x - left.x;
+        int dy = right.y - left.y;
+
         float nx = Math.abs(dx);
         float ny = Math.abs(dy);
+        int sign_x = dx > 0 ? 1 : -1, sign_y = dy > 0 ? 1 : -1;
 
-        float signX = dx > 0 ? 1 : -1;
-        float signY = dy > 0 ? 1 : -1;
-
-        Vector2 p = new Vector2(left.doorX, left.doorY);
+        Vector2 p = new Vector2(left.x, left.y);
         List<Vector2> points = new ArrayList<>();
         points.add(p);
 
-        for (int ix = 0, iy = 0; ix < nx / 16f || iy < ny / 16f; ) {
-            if (0.5 + ix / nx < 0.5 + iy / ny) {
-                p.x += 16 * signX;
+        for (int ix = 0, iy = 0; ix < nx || iy < ny; ) {
+            if ((1 + ix) / nx < (1 + iy) / ny) {
+                p.x += sign_x;
                 ix++;
             } else {
-                p.y += 16 * signY;
+                p.y += sign_y;
                 iy++;
             }
             points.add(new Vector2(p.x, p.y));
         }
-
         return points;
-    }*/
-
+    }
 
     private Room getRoom() {
         if (room != null)

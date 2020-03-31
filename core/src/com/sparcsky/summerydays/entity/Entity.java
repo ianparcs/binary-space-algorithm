@@ -4,10 +4,10 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public abstract class Entity {
 
-    public float x;
-    public float y;
-    public float width;
-    public float height;
+    protected float x;
+    protected float y;
+    protected float width;
+    protected float height;
 
     public void update(float delta) {
 
